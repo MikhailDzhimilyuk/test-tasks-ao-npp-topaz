@@ -4,7 +4,7 @@ namespace WpfApp1
 {
     public partial class InputDialog : Window
     {
-        public string InputValue { get; private set; } = string.Empty;
+        public event EventHandler<string>? DataSubmittedEvent;
 
         public InputDialog()
         {
@@ -15,9 +15,7 @@ namespace WpfApp1
         {
             if (!string.IsNullOrWhiteSpace(InputTextBox?.Text))
             {
-                InputValue = InputTextBox.Text;
-                DialogResult = true;
-                Close();
+                DataSubmittedEvent?.Invoke(this, InputTextBox.Text);
             }
         }
     }

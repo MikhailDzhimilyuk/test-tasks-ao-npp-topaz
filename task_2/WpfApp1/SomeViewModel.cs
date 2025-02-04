@@ -16,10 +16,12 @@ namespace WpfApp1
             }
         }
 
-        public ICommand GetDataCommand => new RelayCommand(() =>
+        public ICommand GetDataCommand => new RelayCommand(async () =>
         {
             var ds = new SomeSource();
-            Data = ds.GetData();
+            ds.DataSubmittedEvent += (sender, data) => { Data = data; };
+
+            await ds.GetData();
         });
     }
 }
